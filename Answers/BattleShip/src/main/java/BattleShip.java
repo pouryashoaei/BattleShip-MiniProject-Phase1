@@ -169,7 +169,7 @@ public class BattleShip {
         } else {
             System.out.println("Miss!");
             opponentGrid[row][col] = MISS;
-            trackingGrid[row][col] = MISS;o
+            trackingGrid[row][col] = MISS;
     }
 
     /**
@@ -178,7 +178,9 @@ public class BattleShip {
       @return true if the game is over (all ships are sunk), false otherwise.
      */
     static boolean isGameOver() {
-        //todo
+            return allShipsSunk(player1Grid) || allShipsSunk(player2Grid);
+        }
+
         return false;
     }
 
@@ -189,7 +191,14 @@ public class BattleShip {
       @return true if all ships are sunk, false otherwise.
      */
     static boolean allShipsSunk(char[][] grid) {
-        //todo
+        for (char[] row : grid) {
+            for (char cell : row) {
+                if (cell == SHIP) {
+                    return false;
+                }
+            }
+        }
+        return true;
         return true;
     }
 
@@ -199,9 +208,23 @@ public class BattleShip {
       @param input The input string to validate.
       @return true if the input is in the correct format, false otherwise.
      */
-    static boolean isValidInput(String input) {
-        //todo
-        return true;
+    static boolean isValidInput(String input,int gridSize){
+
+        if (input.length() < 2 || input.length() > 3) {
+            return false;
+        }
+
+        char rowChar = input.charAt(0);
+        if (rowChar < 'A' || rowChar >= 'A' + gridSize) {
+            return false;
+        }
+
+        try {
+            int col = Integer.parseInt(input.substring(1));
+            return col >= 1 && col <= gridSize;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     /**
@@ -211,6 +234,17 @@ public class BattleShip {
       @param grid The tracking grid to print.
      */
     static void printGrid(char[][] grid) {
-        //todo
+        System.out.print("  ");
+        for (int i = 1; i <= GRID_SIZE; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < GRID_SIZE; i++) {
+            System.out.print((char) ('A' + i) + " ");
+            for (int j = 0; j < GRID_SIZE; j++) {
+                System.out.print(grid[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
