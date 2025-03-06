@@ -115,7 +115,21 @@ public class BattleShip {
       @return true if the ship can be placed at the specified location, false otherwise.
      */
     static boolean canPlaceShip(char[][] grid, int row, int col, int size, boolean horizontal) {
-        //todo
+        // Check if the ship goes out of bounds
+        if (horizontal && col + size > GRID_SIZE || !horizontal && row + size > GRID_SIZE) {
+            return false;
+        }
+
+        // Determine the direction of iteration
+        int rowStep = horizontal ? 0 : 1;
+        int colStep = horizontal ? 1 : 0;
+
+        // Check if all required cells are WATER
+        for (int i = 0; i < size; i++) {
+            if (grid[row + i * rowStep][col + i * colStep] != WATER) {
+                return false;
+            }
+        }
         return true;
     }
 
